@@ -5,7 +5,10 @@ requirejs.config({
     jquery: '../../jquery/dist/jquery.min',
     underscore: '../../underscore/underscore-min',
     backbone: '../../backbone/backbone-min',
-    bluebird: '../../bluebird/js/browser/bluebird.min'
+    bluebird: '../../bluebird/js/browser/bluebird.min',
+    backboneSyphon: '../../backbone.syphon/lib/backbone.syphon.min',
+    backboneRadio: '../../backbone.radio/build/backbone.radio',
+    localStorage: '../../backbone.localStorage/backbone.localStorage-min'
   },
 
   shim: {
@@ -16,37 +19,4 @@ requirejs.config({
   }
 });
 
-require(['backbone', 'models/passwords', 'views/dashboard', 'bluebird'], (bb, collection, dash, Promise) => {
-  var Router = Backbone.Router.extend({
-    routes: {
-      '': 'loginPage',
-      'register/': 'registerPage',
-      'dashboard/': 'dashboardPage'
-    },
-
-    loginPage: function() {
-
-    },
-
-    registerPage: function() {
-
-    },
-
-    dashboardPage: function() {
-
-    }
-  });
-
-  var AppRouter = new Router();
-
-  Backbone.history.start({ pushState: true });
-
-  collection.fetch()
-  .then(() => {
-    $('#app').append(
-      new dash.AddListEntry().render().el,
-      new dash.ListContainer({collection: collection}).render().el
-    );
-  });
-
-});
+require(['backbone', 'router']);

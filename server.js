@@ -7,14 +7,8 @@ var express = require('express'),
 
 var app = express();
 
-var passwords = [
-  {id: 1, name: 'joe', password: 'dog'},
-  {id: 2, name: 'zoe', password: 'xog'},
-  {id: 3, name: 'doe', password: 'log'},
-  {id: 4, name: 'chloe', password: 'cog'},
-  {id: 5, name: 'moe', password: 'mog'}
-];
-var ID = 5;
+var passwords = [];
+var ID = 0;
 
 function extend() {
   var args = Array.prototype.slice.call(arguments),
@@ -33,10 +27,6 @@ app
   .use(express.static(path.join(__dirname, 'bower_components')))
   .use(express.static(path.join(__dirname, 'node_modules')))
   .use(express.static(path.join(__dirname, 'public')))
-  .use((req, res, next) => {
-    console.log(req.body);
-    next();
-  })
 
   .get('/api/passwords', (req, res) => res.json(passwords))
   .get('/api/passwords/:id',
@@ -67,22 +57,10 @@ app
           passwords[index] = extend(passwords[index], req.body);
         }
       });
-      res.send({
-        data: {
-          updated: true
-        }
-      });
+      res.json(req.body);
     } else if (item && !req.body) {
       res.send({
-        data: {
-          error: "No data to update"
-        }
-      });
-    } else {
-      res.send({
-        data: {
-          error: "Item does not exist"
-        }
+        error: "No data to update"
       });
     }
   })

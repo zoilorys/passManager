@@ -1,4 +1,4 @@
-define(['backbone', '../models/passwords'], (bb, collection) => {
+define(['models/passwords', 'models/loggedUser', 'backboneSyphon'], (passwords, user) => {
   const AddListEntry = Backbone.View.extend({
     template: _.template($('#list-add-item').html()),
 
@@ -9,34 +9,31 @@ define(['backbone', '../models/passwords'], (bb, collection) => {
     },
 
     events: {
-      'click button.add-entry-button': 'addEntry'
+      'click button.add-entry-button': 'addEntry',
+      'click button.logout-button': 'logout'
     },
 
     addEntry: function() {
-      let entry = {
-        name: this.$('input[name="login"]').val(),
-        password: this.$('input[name="password"]').val()
-      };
+      let entry = Backbone.Syphon.serialize(this);
 
-      collection.create(entry, {
-        silent: true,
-        wait: true,
-        success: function(coll, response) {
-          collection.trigger('update');
-        }
-      });
-      this.$('input[name="login"]').val('');
+      passwords.trigger('passwords:add', entry);
+      this.$('input[name="name"]').val('');
       this.$('input[name="password"]').val('')
+    },
+
+    logout: function() {
+      user.request('user:logout')
+      require(['router'], router => router.navigate('', { trigger: true }));
     }
   });
 
   const ListEntry = Backbone.View.extend({
     tagName: 'tr',
     template: _.template($('#list-entry').html()),
+
     render: function() {
-      var model = this.model.toJSON();
-      model.showPassword = this.showPassword;
-      this.el.innerHTML = this.template(model);
+      this.model.set('showPassword', this.showPassword);
+      this.$el.html(this.template(this.model.toJSON()));
       return this;
     },
 
@@ -53,10 +50,8 @@ define(['backbone', '../models/passwords'], (bb, collection) => {
     },
 
     editPassword: function() {
-      let model = this.model.toJSON();
-      model.password = this.$('input').val();
-      collection.set(model, {remove: false});
-      collection.get(model.id).save();
+      var update = Backbone.Syphon.serialize(this);
+      passwords.trigger('passwords:update', this.model, update);
       this.render();
     }
   });
@@ -67,7 +62,7 @@ define(['backbone', '../models/passwords'], (bb, collection) => {
     template: _.template($('#list-container').html()),
 
     initialize: function() {
-      collection.on('update', () => {
+      this.collection.on('update', () => {
         this.render();
       });
     },
@@ -87,8 +82,7 @@ define(['backbone', '../models/passwords'], (bb, collection) => {
 
     deletePassword: function(e) {
       var id = parseInt($(e.target).attr('data-index'));
-      collection.get(id).destroy();
-      this.render();
+      passwords.trigger('passwords:delete', id);
     }
   });
 
