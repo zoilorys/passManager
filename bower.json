@@ -1,0 +1,23 @@
+{
+  "name": "passmanager",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Ilya Puzanov <zoilorys@gmail.com>"
+  ],
+  "license": "ISC",
+  "moduleType": [],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bluebird": "^3.3.3",
+    "bootstrap": "^3.3.6"
+  }
+}
