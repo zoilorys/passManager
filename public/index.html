@@ -12,10 +12,10 @@
 
     <script id="list-add-item" type="text/template">
       <div class="form form-inline">
-        <div class="form-group">
+        <div class="form-group <% if (errors) { %><%= 'has-error'%><% } %>">
           <input class="form-control" type="text" name="name" placeholder="login">
         </div>
-        <div class="form-group">
+        <div class="form-group <% if (errors) { %><%= 'has-error'%><% } %>">
           <input class="form-control" type="password" name="password" placeholder="password">
         </div>
         <div class="form-group">

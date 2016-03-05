@@ -4,7 +4,7 @@ define(['models/passwords', 'models/loggedUser', 'backboneSyphon'], (passwords, 
     template: _.template($('#list-add-item').html()),
 
     render: function() {
-      this.el.innerHTML = this.template();
+      this.el.innerHTML = this.template({errors: this.errors});
 
       return this;
     },
@@ -18,7 +18,15 @@ define(['models/passwords', 'models/loggedUser', 'backboneSyphon'], (passwords, 
     addEntry: function() {
       let entry = Backbone.Syphon.serialize(this);
 
-      passwords.trigger('passwords:add', entry);
+      let model = passwords.request('passwords:get:instance', entry);
+
+      if (model.isValid()) {
+        passwords.trigger('passwords:add', entry);
+      } else {
+        this.errors = model.validationError;
+        this.render();
+      }
+
       this.$('input[name="name"]').val('');
       this.$('input[name="password"]').val('')
     },
