@@ -15,5 +15,8 @@
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-stylus": "^2.3.0"
+  },
+  "dependencies": {
+    "requirejs": "^2.1.22"
   }
 }

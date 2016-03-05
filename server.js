@@ -85,4 +85,4 @@ app
   })
 
   .get('*', (req, res) => res.sendFile(path.join(__dirname, 'public/index.html')))
-  .listen(3000, () => console.log('run'));
+  .listen(3000, () => console.log('running on http://localhost:3000'));

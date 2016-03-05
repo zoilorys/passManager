@@ -25,7 +25,6 @@ define(['models/passwords'], (passwords) => {
       if (model.isValid()) {
         passwords.request('passwords:authorize', model)
         .then(response => {
-          console.log(response);
           if (response) {
               this.validationErrors = ["User already exist"];
               this.render();
