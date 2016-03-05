@@ -1,5 +1,6 @@
 define(['models/passwords', 'models/loggedUser', 'backboneSyphon'], (passwords, user) => {
   const AddListEntry = Backbone.View.extend({
+    className: 'row z-header',
     template: _.template($('#list-add-item').html()),
 
     render: function() {
@@ -10,7 +11,8 @@ define(['models/passwords', 'models/loggedUser', 'backboneSyphon'], (passwords, 
 
     events: {
       'click button.add-entry-button': 'addEntry',
-      'click button.logout-button': 'logout'
+      'click button.logout-button': 'logout',
+      'keyup input': 'listenKey'
     },
 
     addEntry: function() {
@@ -24,6 +26,12 @@ define(['models/passwords', 'models/loggedUser', 'backboneSyphon'], (passwords, 
     logout: function() {
       user.request('user:logout')
       require(['router'], router => router.navigate('', { trigger: true }));
+    },
+
+    listenKey: function(e) {
+      if (e.which === 13) {
+        this.addEntry();
+      }
     }
   });
 
@@ -58,7 +66,7 @@ define(['models/passwords', 'models/loggedUser', 'backboneSyphon'], (passwords, 
 
   const ListContainer = Backbone.View.extend({
     tagName: 'table',
-    className: 'table table-striped table-hover',
+    className: 'table table-striped table-hover z-table',
     template: _.template($('#list-container').html()),
 
     initialize: function() {

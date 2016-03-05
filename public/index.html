@@ -2,18 +2,27 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>PASSMASTA</title>
+    <title>EPICPASSMASTA 3000 LIMITED PRO EDITION EXTENDED</title>
     <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css" charset="utf-8">
+    <link rel="stylesheet" href="/assets/css/main.css" charset="utf-8">
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app" class="container-fluid"></div>
+
 
     <script id="list-add-item" type="text/template">
-      <input type="text" name="name" placeholder="login">
-      <input type="password" name="password" placeholder="password">
-      <button class="btn btn-default add-entry-button">ADD</button>
-
-      <button class="btn btn-primary logout-button pull-right">LOGOUT</button>
+      <div class="form form-inline">
+        <div class="form-group">
+          <input class="form-control" type="text" name="name" placeholder="login">
+        </div>
+        <div class="form-group">
+          <input class="form-control" type="password" name="password" placeholder="password">
+        </div>
+        <div class="form-group">
+          <button class="btn btn-default add-entry-button">ADD</button>
+        </div>
+        <button class="btn btn-primary logout-button pull-right">LOGOUT</button>
+      </div>
     </script>
 
     <script id="list-container" type="text/template">
@@ -28,59 +37,97 @@
     </script>
 
     <script id="list-entry" type="text/template">
-      <td >
-        <%= name %>
+      <td class="col-md-4">
+        <input class="form-control" name="name" type="text" value="<%= name %>" />
       </td>
-      <td>
-        <input name="password" type="<%= showPassword ? 'text' : 'password' %>" value="<%= password %>" />
+      <td class="col-md-5">
+        <input class="form-control" name="password" type="<%= showPassword ? 'text' : 'password' %>" value="<%= password %>" />
       </td>
-      <td>
-        <button class="btn btn-default toggle-password glyphicon glyphicon-eye-open">
-        </button>
-        <button class="btn btn-default edit-password glyphicon glyphicon-pencil">
-        </button>
-        <button class="btn btn-default delete-password glyphicon glyphicon-remove" data-index="<%= id %>">
-        </button>
+      <td class="col-md-3">
+        <div class="btn-group">
+          <button class="btn btn-default toggle-password glyphicon glyphicon-eye-open">
+          </button>
+          <button class="btn btn-default edit-password glyphicon glyphicon-pencil">
+          </button>
+          <button class="btn btn-default delete-password glyphicon glyphicon-remove" data-index="<%= id %>">
+          </button>
+        </div>
       </td>
     </script>
-
     <script id="loginPage" type="text/template">
-      <div class="form">
-        <div class=""><%= errors %></div>
+      <div class="form-horizontal z-form">
+        <% if (successMessage) { %>
         <div class="form-group">
-          <input type="text" class="form-control" name="name" placeholder="User name" />
+          <div class="bg-success text-center error-block"><%= successMessage %></div>
+        </div>
+        <% } %>
+        <% if (errors) { %>
+          <div class="form-group">
+            <div class="bg-danger text-center error-block">
+              <ul>
+                <% for(var i=0; i < errors.length; i++) { %>
+                  <li><%= errors[i] %></li>
+                <% } %>
+              </ul>
+            </div>
+          </div>
+        <% } %>
+        <div class="form-group">
+          <label for="name-input" class="col-md-2 control-label">Name:</label>
+          <div class="col-md-10">
+            <input id="name-input" type="text" class="form-control" name="name" placeholder="User name" />
+          </div>
         </div>
         <div class="form-group">
-          <input type="password" class="form-control" name="password" placeholder="Password" />
+          <label for="password-input" class="col-md-2 control-label">Password:</label>
+          <div class="col-md-10">
+            <input id="password-input" type="password" class="form-control" name="password" placeholder="Password" />
+          </div>
         </div>
-        <div class="form-group">
+        <div class="form-group text-center">
           <button class="btn btn-primary login-button">LOGIN</button>
         </div>
-        <div class="form-group">
+        <div class="form-group text-center">
           OR
         </div>
-        <div class="form-group">
+        <div class="form-group text-center">
           <button class="btn btn-primary register-button">REGISTER</button>
         </div>
       </div>
     </script>
 
     <script id="regPage" type="text/template">
-      <div class="form">
-        <div class=""><%= errors %></div>
+      <div class="form-horizontal z-form">
+        <% if (errors) { %>
         <div class="form-group">
-          <input type="text" class="form-control" name="name" placeholder="User name" />
+          <div class="bg-danger text-center error-block">
+            <ul>
+              <% for(var i=0; i < errors.length; i++) { %>
+                <li><%= errors[i] %></li>
+              <% } %>
+            </ul>
+          </div>
+        </div>
+        <% } %>
+        <div class="form-group">
+          <label for="name-input" class="col-md-2 control-label">Name:</label>
+          <div class="col-md-10">
+            <input id="name-input" type="text" class="form-control" name="name" placeholder="User name" />
+          </div>
         </div>
         <div class="form-group">
-          <input type="password" class="form-control" name="password" placeholder="Password" />
+          <label for="password-input" class="col-md-2 control-label">Password:</label>
+          <div class="col-md-10">
+            <input id="password-input" type="password" class="form-control" name="password" placeholder="Password" />
+          </div>
         </div>
-        <div class="form-group">
+        <div class="form-group text-center">
           <button class="btn btn-primary register-button">REGISTER</button>
         </div>
-        <div class="form-group">
+        <div class="form-group text-center">
           OR
         </div>
-        <div class="form-group">
+        <div class="form-group text-center">
           <button class="btn btn-primary back-button">BACK TO LOGIN</button>
         </div>
       </div>
