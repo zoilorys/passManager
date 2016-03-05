@@ -9,6 +9,7 @@
 * Node.js (Express.js)
 * ES2015
 * Stylus
+* Bootstrap
 * gulp
 
 #### Starting up:
