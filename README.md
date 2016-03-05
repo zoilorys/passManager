@@ -1,6 +1,7 @@
 # Backbone password manager
 
 #### Used stack:
+* RequireJS
 * Backbone (and his deps)
 * Backbone.Radio
 * Backbone.Syphon
